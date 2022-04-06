@@ -1,0 +1,18 @@
+body {
+  background-color: lightblue;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+  border-radius: 25px;
+}
+
+audio {
+  padding-bottom: 30px;
+}
+
+.feedback {
+  margin: 0 auto;
+}
+
