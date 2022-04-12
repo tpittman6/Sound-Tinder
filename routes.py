@@ -1,9 +1,11 @@
-from app import app, db
-import random
 import os
-
-import flask
+import random
 from flask_login import login_user, current_user, LoginManager, logout_user
+from app import app, db
+from flask import Flask, request, redirect, g, render_template, session
+from spotify_requests import spotify
+import flask
+
 from flask_login.utils import login_required
 from models import User, Rating
 
@@ -115,10 +117,19 @@ def index():
         movie_id=movie_id,
     )
 
+@app.route('/featured_playlists')
+def featured_playlists():
+    if 'auth_header' in session:
+        auth_header = session['auth_header']
+        hot = spotify.get_featured_playlists(auth_header)
+        if valid_token(hot):
+            return render_template('featured_playlists.html', hot=hot)
+
+    return render_template('profile.html')
 
 if __name__ == "__main__":
     app.run(
         host=os.getenv("IP", "0.0.0.0"),
         port=int(os.getenv("PORT", 8080)),
-        debug=True,
+        debug=True,port=spotify.PORT
     )
