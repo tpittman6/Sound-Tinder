@@ -1,1 +1,1 @@
-web: gunicorn routes.py
+web: python routes.py
