@@ -1,11 +1,8 @@
 <html>
-    <head></head>
+    <head>
+        <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
+    </head>
     <body>
-        <h1>Sign up!</h1>
-        <form method="POST" action="/signup">
-            <input class="input is-large" type="text" name="username" placeholder="Your Username" autofocus="">
-            <input type="submit" value="Submit">
-        </form>
-        <a href={{ url_for('login') }}>Log In</a>
+        
     </body>
 </html>

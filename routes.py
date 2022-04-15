@@ -1,124 +1,77 @@
 from app import app, db
 import random
 import os
-
 import flask
-from flask_login import login_user, current_user, LoginManager, logout_user
-from flask_login.utils import login_required
-from models import User, Rating
+from flask import Flask
 
-from wikipedia import get_wiki_link
-from tmdb import get_movie_data
-
-login_manager = LoginManager()
-login_manager.login_view = "login"
-login_manager.init_app(app)
-
-
-@login_manager.user_loader
-def load_user(user_name):
-    return User.query.get(user_name)
-
-
-@app.route("/signup")
-def signup():
-    return flask.render_template("signup.html")
-
-
-@app.route("/signup", methods=["POST"])
-def signup_post():
-    username = flask.request.form.get("username")
-    user = User.query.filter_by(username=username).first()
-    if user:
-        pass
-    else:
-        user = User(username=username)
-        db.session.add(user)
-        db.session.commit()
-
-    return flask.redirect(flask.url_for("login"))
+# this was a test function for google login -- still might need it, not sure
+def login_is_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            return abort(401) # Authorization required
+        else:
+            return function()
+    return wrapper
 
 
 @app.route("/login")
 def login():
-    return flask.render_template("login.html")
+    return flask.redirect("/welcome_user")
 
 
-@app.route("/login", methods=["POST"])
-def login_post():
-    username = flask.request.form.get("username")
-    user = User.query.filter_by(username=username).first()
-    if user:
-        login_user(user)
-        return flask.redirect(flask.url_for("index"))
-
-    else:
-        return flask.jsonify({"status": 401, "reason": "Username or Password Error"})
+# This is part of the google login tutorial -- not sure if it will stay
+@app.route("/callback")
+def callback():
+    pass
 
 
-MOVIE_IDS = [
-    157336,  # actually IDK what this is
-]
-
-
-@app.route("/rate", methods=["POST"])
-def rate():
-    data = flask.request.form
-    rating = data.get("rating")
-    comment = data.get("comment")
-    movie_id = data.get("movie_id")
-
-    new_rating = Rating(
-        username=current_user.username,
-        rating=rating,
-        comment=comment,
-        movie_id=movie_id,
-    )
-
-    db.session.add(new_rating)
-    db.session.commit()
-    return flask.redirect("index")
-
-
-@app.route("/")
-def landing():
-    if current_user.is_authenticated:
-        return flask.redirect("index")
-    return flask.redirect("login")
+# We may not need this if we can sign up or login on the same page with google oauth
+@app.route("/signup")
+def signup():
+    pass
 
 
 @app.route("/logout")
 def logout():
-    logout_user()
-    return flask.redirect("login")
-
-
-@app.route("/index")
-@login_required
-def index():
-    movie_id = random.choice(MOVIE_IDS)
-
-    # API calls
-    (title, tagline, genre, poster_image) = get_movie_data(movie_id)
-    wikipedia_url = get_wiki_link(title)
-
-    ratings = Rating.query.filter_by(movie_id=movie_id).all()
-
-    return flask.render_template(
-        "index.html",
-        title=title,
-        tagline=tagline,
-        genre=genre,
-        poster_image=poster_image,
-        wiki_url=wikipedia_url,
-        ratings=ratings,
-        movie_id=movie_id,
+    return flask.redirect(
+        "/"
     )
 
+
+# This will be the 'landing page' -- decorate index.html with all landing page stuff
+# This will be where you login as well
+@app.route("/")
+def index():
+    return flask.render_template(
+        "index.html",
+    )
+
+
+# This is where you will be redirected after successfully logging in
+@app.route("/welcome_user")
+def welcome_user():
+    return flask.render_template(
+        "welcome_user.html",
+    )
+
+
+# Profile info page
+@app.route("/profile")
+def profile():
+    return flask.render_template(
+        "profile.html",
+    )
+
+# This is the page that the 'swiping' will be done on
+@app.route("/discover")
+def discover():
+    return flask.render_template(
+        "discover.html",
+    )
 
 if __name__ == "__main__":
     app.run(
         host=os.getenv("IP", "0.0.0.0"),
-        port=int(os.getenv("PORT", 8080)),
+        port=int(os.getenv("PORT", 5000)),
         debug=True,
     )
