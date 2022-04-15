@@ -15,4 +15,101 @@ audio {
 .feedback {
   margin: 0 auto;
 }
+html, body {
+  height:100%;
+font-family: "Lato", sans-serif;
+color: #fff;
+background-color: #05ac78;
+}
+body {
+display: flex;
+flex-direction: column;
+}
+.content {
+flex: 1 0 auto;
+margin: 5em auto;
+}
+.footer {
+flex-shrink: 0;
+  padding: 20px 10px;
+  color: #7aaf64;
+  background-color: #1ED760;
+  text-align: center;
+  margin-top: 3em;
+}
+h1 {
+text-align: center;
+font-family: Lato;
 
+}
+header{
+     
+  overflow: hidden;
+}
+
+#top-header{
+       
+  text-align: center;
+  height: 60px;
+}
+
+/****************/   
+/* Styling Logo */
+/****************/
+#logo{
+  float: left;
+  padding: none;
+  margin: none;
+  height: 60px;
+  width: 30%;
+}
+
+#logo img{
+  width: 60%;
+  float: left;
+  padding: 10px 0px;
+}   
+
+/***************************/
+/* Styling Navigation Menu */
+/***************************/
+#menu{
+  float: center;
+  width: 70%;
+  height: 100%;
+  margin: none;
+}
+   
+#menu ul{
+  text-align: center;
+  float: right;
+  margin: none;
+  background: #74f0aa;
+}
+   
+#menu li{
+  display: inline-block;
+  padding: none;
+  margin: none;
+}
+   
+#menu li a, #menu li span{
+  display: inline-block;
+  padding: 0em 1.5em;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 60px;
+}
+   
+#menu li a{
+       
+  color: #FFF;
+}
+   
+#menu li:hover a, #menu li span{
+  background: rgb(4, 211, 63);
+  color: #008b4f;
+  border-left: 1px solid #00cf11;
+  text-decoration: none;
+}
