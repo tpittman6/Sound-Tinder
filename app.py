@@ -1,5 +1,5 @@
-import os
 import flask
+import os
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import find_dotenv, load_dotenv
 
