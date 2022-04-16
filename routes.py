@@ -93,6 +93,7 @@ def logout():
     return flask.redirect("login")
 
 
+
 @app.route("/index")
 @login_required
 def index():
@@ -116,9 +117,10 @@ def index():
     )
 
 
+
 if __name__ == "__main__":
     app.run(
-        host=os.getenv("IP", "0.0.0.0"),
+        host=os.getenv("IP", "192.168.0.2"),
         port=int(os.getenv("PORT", 8080)),
         debug=True,
     )
