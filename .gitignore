@@ -2,3 +2,4 @@ __pycache__
 venv/*
 .env
 virtenv/*
+.DS_Store
