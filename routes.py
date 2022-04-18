@@ -84,7 +84,7 @@ def google_logged_in(blueprint, token):
 @app.route("/home")
 def home():
     user = dict(session)['profile']['email']
-    return flask.render_template(
+    return render_template(
         "home.html",
         user=user,
     )
@@ -93,14 +93,14 @@ def home():
 # Profile info page
 @app.route("/profile")
 def profile():
-    return flask.render_template(
+    return render_template(
         "profile.html",
     )
 
 # This is the page that the 'swiping' will be done on
 @app.route("/discover")
 def discover():
-    return flask.render_template(
+    return render_template(
         "discover.html",
     )
 
