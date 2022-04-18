@@ -9,6 +9,6 @@ export SECRET_KEY="<MAKE UP A SECRET KEY>"
 export GOOGLE_CLIENT_ID="<GOOGLE CLIENT ID FROM GOOGLE CLOUD CONSOLE>"
 export GOOGLE_CLIENT_SECRET="<GOOGLE CLIENT SECRET KEY FROM GOOGLE CLOUD CONSOLE>"
 ```
-3. comment out lines 88 and 89 of routes.py so google oauth will work
+3. comment out lines that contain 'IP' and 'PORT' in routes.py so google oauth will work
 4. Run `python3 routes.py`
 
