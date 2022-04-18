@@ -3,3 +3,6 @@ requests
 python-dotenv
 Flask-SQLAlchemy
 psycopg2-binary
+flask-dance[sqla]
+blinker
+flask-login

@@ -7,5 +7,6 @@
 export DATABASE_URL="<YOUR POSTGRESQL DB URL>"
 export SECRET_KEY="<MAKE UP A SECRET KEY>"
 ```
-3. Run `python3 routes.py`
+3. comment out lines 88 and 89 of routes.py so google oauth will work
+4. Run `python3 routes.py`
 

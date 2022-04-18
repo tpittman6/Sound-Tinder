@@ -6,6 +6,8 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
 
 app = flask.Flask(__name__)
+
+
 # Point SQLAlchemy to your Heroku database
 db_url = os.getenv("DATABASE_URL")
 if db_url.startswith("postgres://"):
