@@ -3,13 +3,23 @@
         <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
     </head>
     <body>
-        <a href="/discover"><button>Discover!</button></a>
+        {% if current_user.is_authenticated %}
+        <a href="/home">Home</a>
         <a href="/logout">Logout</a>
-        <h1>
-            Profile Page
-        </h1>
-        <p>
-            add all profile info to this page
-        </p>
+        <div>
+            <img src="{{ google_data.picture }}">
+            <h1>Profile</h1>
+            <h2>{{ google_data.given_name }}</h2>
+        </div>
+
+        <div>
+            <h1>Register as an artist <a href="/artist_registration">here</a></h1>
+        </div>
+
+        
+        {% else %}
+        <a href="/home">Home</a>
+        <p>Click <a href="/google">here</a> to login with a Google Account.</p>
+        {% endif %}
     </body>
 </html>
