@@ -1,126 +1,108 @@
 from app import app, db
-import random
 import os
+from models import User, OAuth
+from flask import Flask, render_template, redirect, session, url_for
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import (LoginManager, UserMixin,
+                         current_user, login_user, logout_user)
+from flask_dance.consumer import oauth_authorized
+from flask_dance.contrib.google import make_google_blueprint, google
+from dotenv import find_dotenv, load_dotenv
+from flask_dance.consumer.storage.sqla import (OAuthConsumerMixin,
+                                               SQLAlchemyStorage)
 
-import flask
-from flask_login import login_user, current_user, LoginManager, logout_user
-from flask_login.utils import login_required
-from models import User, Rating
+load_dotenv(find_dotenv())
 
-from wikipedia import get_wiki_link
-from tmdb import get_movie_data
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 login_manager = LoginManager()
-login_manager.login_view = "login"
 login_manager.init_app(app)
-
+login_manager.login_view = 'google.login'
 
 @login_manager.user_loader
-def load_user(user_name):
-    return User.query.get(user_name)
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+google_blueprint = make_google_blueprint(
+    client_id=os.getenv('GOOGLE_CLIENT_ID'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+    scope="openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+    offline=True,
+    reprompt_consent=True,
+    storage=SQLAlchemyStorage(OAuth, db.session, user=current_user)
+)
+
+app.register_blueprint(google_blueprint)
+
+# This will be the 'landing page' -- decorate index.html with all landing page stuff
+# This will be where you login as well
+@app.route('/')
+def index():
+    google_data = None
+    user_info_endpoint = '/oauth2/v2/userinfo'
+    if current_user.is_authenticated and google.authorized:
+        google_data = google.get(user_info_endpoint).json()
+    return render_template('index.html',
+                           google_data=google_data,
+                           fetch_url=google.base_url + user_info_endpoint)
 
 
-@app.route("/signup")
-def signup():
-    return flask.render_template("signup.html")
-
-
-@app.route("/signup", methods=["POST"])
-def signup_post():
-    username = flask.request.form.get("username")
-    user = User.query.filter_by(username=username).first()
-    if user:
-        pass
-    else:
-        user = User(username=username)
-        db.session.add(user)
-        db.session.commit()
-
-    return flask.redirect(flask.url_for("login"))
-
-
-@app.route("/login")
-def login():
-    return flask.render_template("login.html")
-
-
-@app.route("/login", methods=["POST"])
-def login_post():
-    username = flask.request.form.get("username")
-    user = User.query.filter_by(username=username).first()
-    if user:
-        login_user(user)
-        return flask.redirect(flask.url_for("index"))
-
-    else:
-        return flask.jsonify({"status": 401, "reason": "Username or Password Error"})
-
-
-MOVIE_IDS = [
-    157336,  # actually IDK what this is
-]
-
-
-@app.route("/rate", methods=["POST"])
-def rate():
-    data = flask.request.form
-    rating = data.get("rating")
-    comment = data.get("comment")
-    movie_id = data.get("movie_id")
-
-    new_rating = Rating(
-        username=current_user.username,
-        rating=rating,
-        comment=comment,
-        movie_id=movie_id,
-    )
-
-    db.session.add(new_rating)
-    db.session.commit()
-    return flask.redirect("index")
-
-
-@app.route("/")
-def landing():
-    if current_user.is_authenticated:
-        return flask.redirect("index")
-    return flask.redirect("login")
-
-
-@app.route("/logout")
+@app.route('/logout')
 def logout():
     logout_user()
-    return flask.redirect("login")
+    return redirect(url_for('index'))
 
 
+@oauth_authorized.connect_via(google_blueprint)
+def google_logged_in(blueprint, token):
+    resp = blueprint.session.get('/oauth2/v2/userinfo')
+    user_info = resp.json()
+    user_id = str(user_info['id'])
+    oauth = OAuth.query.filter_by(provider=blueprint.name,
+                                  provider_user_id=user_id).first()
+    if not oauth:
+        oauth = OAuth(provider=blueprint.name,
+                      provider_user_id=user_id,
+                      token=token)
+    else:
+        oauth.token = token
+        db.session.add(oauth)
+        db.session.commit()
+        login_user(oauth.user)
+    if not oauth.user:
+        user = User(email=user_info["email"],
+                    name=user_info["name"])
+        oauth.user = user
+        db.session.add_all([user, oauth])
+        db.session.commit()
+        login_user(user)
 
-@app.route("/index")
-@login_required
-def index():
-    movie_id = random.choice(MOVIE_IDS)
+    return False
 
-    # API calls
-    (title, tagline, genre, poster_image) = get_movie_data(movie_id)
-    wikipedia_url = get_wiki_link(title)
 
-    ratings = Rating.query.filter_by(movie_id=movie_id).all()
-
-    return flask.render_template(
-        "index.html",
-        title=title,
-        tagline=tagline,
-        genre=genre,
-        poster_image=poster_image,
-        wiki_url=wikipedia_url,
-        ratings=ratings,
-        movie_id=movie_id,
+# This is where you will be redirected after successfully logging in
+@app.route("/home")
+def home():
+    user = dict(session)['profile']['email']
+    return render_template(
+        "home.html",
+        user=user,
     )
 
 
+# Profile info page
+@app.route("/profile")
+def profile():
+    return render_template(
+        "profile.html",
+    )
+
+# This is the page that the 'swiping' will be done on
+@app.route("/discover")
+def discover():
+    return render_template(
+        "discover.html",
+    )
 
 if __name__ == "__main__":
-    app.run(
-        host=os.getenv("IP", "192.168.0.2"),
-        port=int(os.getenv("PORT", 8080)),
-        debug=True,
-    )
+    app.run(debug=True)
