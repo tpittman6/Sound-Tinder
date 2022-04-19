@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
+    </head>
+    <body>
+        {% if current_user.is_authenticated %}
+        <a href="/profile"><button>Profile</button></a>
+        <a href="/logout">Logout</a>
+        
+        <div>
+            {% block content %}
+                <h1>Artist Registration</h1>
+                <form action="/artist_registration" method="post">
+                    <label for="name">Artist Name</label>
+                    <input type="text" name="name" value="{{ request.form['name'] }}"></input>
+                    <br>
+                    <br>
+                    <label for="spotify_id">Spotify Artist ID</label>
+                    <input type="text" name="spotify_id" value="{{ request.form['spotify_id'] }}"></input>
+                    <br>
+                    <br>
+                    <label for="primary_genre">Genre</label>
+                    <input type="text" name="primary_genre" value="{{ request.form['primary_genre'] }}"></input>
+                    <br>
+                    <br>
+                    <label for="secondary_genre">Secondary Genre *optional</label>
+                    <input type="text" name="secondary_genre" value="{{ request.form['secondary_genre'] }}"></input>
+                    <br>
+                    <button type="submit">Submit</button>
+                </form>
+            {% endblock %}
+        </div>
+        
+        {% else %}
+            <p>Click <a href="/google">here</a> to login with a Google Account.</p>
+        {% endif %}
+    </body>
+</html>
