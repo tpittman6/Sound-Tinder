@@ -111,28 +111,49 @@ def home():
     )
 
 
-@app.route("/spinder")
+@app.route("/spinder", methods=['GET', 'POST'])
 def spinder():
     google_data = None
     user_info_endpoint = '/oauth2/v2/userinfo'
     if current_user.is_authenticated and google.authorized:
         google_data = google.get(user_info_endpoint).json()
 
-    artists = Artist.query.all()
-    all_artist_names =[]
-    all_artist_players = []
-    for i in artists:
-        all_artist_names.append(i.artist_name)
-        all_artist_players.append(i.spotify_player)
+    # When an onClick event happens, the query will iterate to the next artist
+    counter = 1
+    if request.method == 'POST':
+        counter = counter + 1
+        if counter > Artist.query.count():
+            curr_artist_name = 'Sorry,'
+            curr_player_reduced = 'There are no more artists'
+            return render_template('spinder.html',
+            google_data=google_data,
+            fetch_url=google.base_url + user_info_endpoint,
+            name=html.unescape(curr_artist_name),
+            player=curr_player_reduced
+        )
+            
+        artist = Artist.query.filter_by(id=counter).first()
+        curr_artist_name = artist.artist_name
+        curr_player = artist.spotify_player
+        curr_player_reduced = curr_player.replace('100%', '45%').replace('380', '450')
+    
+        return render_template('spinder.html',
+            google_data=google_data,
+            fetch_url=google.base_url + user_info_endpoint,
+            name=html.unescape(curr_artist_name),
+            player=curr_player_reduced
+        )
 
-    # This modifies the embed spotify player link to make it work in html
-    sub_str_artists = {x.replace('<iframe src="', '').replace('width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>', '') for x in all_artist_players}
+    artist = Artist.query.filter_by(id=counter).first()
+    curr_artist_name = artist.artist_name
+    curr_player = artist.spotify_player
+    curr_player_reduced = curr_player.replace('100%', '45%').replace('380', '450')
     
     return render_template('spinder.html',
             google_data=google_data,
             fetch_url=google.base_url + user_info_endpoint,
-            artist_names=html.unescape(all_artist_names),
-            artist_players=html.unescape(sub_str_artists)
+            name=html.unescape(curr_artist_name),
+            player=curr_player_reduced
     )
 
     return render_template(
