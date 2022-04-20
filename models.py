@@ -9,13 +9,18 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(256), unique=True)
     name = db.Column(db.String(256))
+<<<<<<< HEAD
     is_artist = db.Column(db.String(256)) # If the user is registered as an artist, is_artist == 1
 
 
+=======
+
+>>>>>>> main
 class OAuth(OAuthConsumerMixin, db.Model):
     provider_user_id = db.Column(db.String(256), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship(User)
+<<<<<<< HEAD
 
 
 class Artist(db.Model):
@@ -25,6 +30,8 @@ class Artist(db.Model):
     artist_genre_primary = db.Column(db.String(256))
     artist_genre_secondary = db.Column(db.String(256))
     user_email = db.Column(db.String(256)) # this is to match artist with its user
+=======
+>>>>>>> main
 
 
 db.create_all()
