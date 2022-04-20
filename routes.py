@@ -91,18 +91,17 @@ def home():
 
 
 # Profile info page
-@app.route("/profile")
+@app.route("/discovery")
 def profile():
     return render_template(
-        "profile.html",
+        "discovery.html",
     )
 
 # This is the page that the 'swiping' will be done on
-@app.route("/discover")
+@app.route("/spinder")
 def discover():
     return render_template(
-        "discover.html",
+        "spinder.html",
     )
-
 if __name__ == "__main__":
     app.run(debug=True)
