@@ -35,8 +35,7 @@ google_blueprint = make_google_blueprint(
 
 app.register_blueprint(google_blueprint)
 
-# This will be the 'landing page' -- decorate index.html with all landing page stuff
-# This will be where you login as well
+
 @app.route('/')
 def index():
     google_data = None
