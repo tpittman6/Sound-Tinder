@@ -1,6 +1,5 @@
 nav {
     margin: 27px auto 0;
-  
     position: relative;
     width: 590px;
     height: 50px;
@@ -8,7 +7,7 @@ nav {
     border-radius: 8px;
     font-size: 0;
   }
-  nav a {
+  nav a { /*change menu fonts and positions*/
     line-height: 50px;
     height: 100%;
     font-size: 15px;
@@ -26,9 +25,9 @@ nav {
     height: 100%;
     top: 0;
     z-index: 0;
-    transition: all .5s ease 0s;
+    transition: all .5s ease 0s; /*change  buttoms shape */
     border-radius: 8px;
-  }
+  } /* size of buttoms and range  of effect */
   a:nth-child(1) {
     width: 100px;
   }
@@ -43,7 +42,7 @@ nav {
   }
   a:nth-child(5) {
     width: 120px;
-  }
+  } /*buttoms width and position */
   nav .start-home, a:nth-child(1):hover~.animation {
     width: 100px;
     left: 0;
@@ -105,9 +104,9 @@ nav {
     font-family: 'Cherry Swash', cursive;
   }
   
-  p {
+  p { /* page settings all can be deleted */
       position: absolute;
-      bottom: 20px;
+      bottom: 420px;
       width: 100%;
       text-align: center;
       color: #ecf0f1;
