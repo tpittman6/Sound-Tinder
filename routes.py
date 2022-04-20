@@ -119,15 +119,20 @@ def spinder():
         google_data = google.get(user_info_endpoint).json()
 
     artists = Artist.query.all()
-    all_artists = []
+    all_artist_names =[]
+    all_artist_players = []
     for i in artists:
-        all_artists.append(i.spotify_player)
-    sub_str_artists = {x.replace('<iframe src="', '').replace('width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>', '') for x in all_artists}
+        all_artist_names.append(i.artist_name)
+        all_artist_players.append(i.spotify_player)
+
+    # This modifies the embed spotify player link to make it work in html
+    sub_str_artists = {x.replace('<iframe src="', '').replace('width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>', '') for x in all_artist_players}
     
     return render_template('spinder.html',
             google_data=google_data,
             fetch_url=google.base_url + user_info_endpoint,
-            artists=html.unescape(sub_str_artists)
+            artist_names=html.unescape(all_artist_names),
+            artist_players=html.unescape(sub_str_artists)
     )
 
     return render_template(
