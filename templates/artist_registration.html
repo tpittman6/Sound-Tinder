@@ -22,16 +22,9 @@
                     <input type="text" name="name" value="{{ request.form['name'] }}"></input>
                     <br>
                     <br>
-                    <label for="spotify_id">Spotify Artist ID</label>
-                    <input type="text" name="spotify_id" value="{{ request.form['spotify_id'] }}"></input>
+                    <label for="spotify_player">embed your spotify player here</label>
+                    <input type="text" name="spotify_player" value="{{ request.form['spotify_player'] }}"></input>
                     <br>
-                    <br>
-                    <label for="primary_genre">Genre</label>
-                    <input type="text" name="primary_genre" value="{{ request.form['primary_genre'] }}"></input>
-                    <br>
-                    <br>
-                    <label for="secondary_genre">Secondary Genre *optional</label>
-                    <input type="text" name="secondary_genre" value="{{ request.form['secondary_genre'] }}"></input>
                     <br>
                     <button type="submit">Submit</button>
                 </form>

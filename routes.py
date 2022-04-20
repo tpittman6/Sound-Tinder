@@ -1,7 +1,8 @@
 from app import app, db
+import html
 import os
 from models import User, OAuth, Artist
-from flask import Flask, render_template, redirect, session, url_for, request
+from flask import Flask, render_template, redirect, session, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import (LoginManager, UserMixin,
                          current_user, login_user, logout_user)
@@ -42,7 +43,7 @@ def index():
     user_info_endpoint = '/oauth2/v2/userinfo'
     if current_user.is_authenticated and google.authorized:
         google_data = google.get(user_info_endpoint).json()
-    return render_template('index.html',
+    return render_template('home.html',
                            google_data=google_data,
                            fetch_url=google.base_url + user_info_endpoint)
 
@@ -50,7 +51,7 @@ def index():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 
 @oauth_authorized.connect_via(google_blueprint)
@@ -92,7 +93,7 @@ def profile():
             fetch_url=google.base_url + user_info_endpoint)
 
     return render_template(
-        "index.html",
+        "home.html",
     )
 
 @app.route("/home")
@@ -106,25 +107,31 @@ def home():
             fetch_url=google.base_url + user_info_endpoint)
 
     return render_template(
-        "index.html",
+        "home.html",
     )
 
-# This is the page that the 'swiping' will be done on
+
 @app.route("/spinder")
 def spinder():
     google_data = None
     user_info_endpoint = '/oauth2/v2/userinfo'
     if current_user.is_authenticated and google.authorized:
         google_data = google.get(user_info_endpoint).json()
-    return render_template('index.html',
+
+    artists = Artist.query.all()
+    all_artists = []
+    for i in artists:
+        all_artists.append(i.spotify_player)
+    sub_str_artists = {x.replace('<iframe src="', '').replace('width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>', '') for x in all_artists}
+    
+    return render_template('spinder.html',
             google_data=google_data,
-            fetch_url=google.base_url + user_info_endpoint)
+            fetch_url=google.base_url + user_info_endpoint,
+            artists=html.unescape(sub_str_artists)
+    )
 
     return render_template(
-        "index.html",
-    )
-    return render_template(
-        "index.html",
+        "home.html"
     )
 
 @app.route("/artist_registration", methods=['GET', 'POST'])
@@ -146,8 +153,6 @@ def artist_registration():
     if request.method == 'POST':
         name = request.form['name']
         spotify_player = request.form['spotify_player']
-        #primary_genre = request.form['primary_genre']
-        #secondary_genre = request.form['secondary_genre']
 
         # Couldn't get the messages to flash, 
         # but they do stop you from posting the form if you miss a field
@@ -160,8 +165,6 @@ def artist_registration():
             new_artist = Artist(
                 artist_name = name,
                 spotify_player = spotify_player,
-                #artist_genre_primary = primary_genre,
-                #artist_genre_secondary = secondary_genre,
                 user_email = current_user.email
             )
             

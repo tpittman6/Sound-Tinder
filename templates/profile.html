@@ -15,11 +15,16 @@
         <h1>
             Profile Page
         </h1>
+        {% if current_user.is_authenticated %}
+        
         <h2>
             <h1>Register as an artist <a href="/artist_registration">here</a></h1>
         </h2>
+
+        {% else %}
+        <p>Click <a href="/google">here</a> to login with a Google Account.</p>
+        {% endif %}
         
-       
-  
+    
     </body>
-</html>zz
+</html>
