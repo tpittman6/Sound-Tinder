@@ -1,24 +1,22 @@
 <html>
     <head>
         <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
+        <link rel="stylesheet" href={{ url_for('static', filename='menu.css' ) }} />
     </head>
     <body>
-        <a href="/profile"><button>Profile</button></a>
-        <a href="/discover"><button>Discover!</button></a>
-        <a href="/logout">Logout</a>
-        <p>Welcome to SoundTinder </p>
-        {% if not current_user.is_authenticated %}
-    <p>Click <a href="/google">here</a> to login with a Google Account.</p>
-  {% else %}
-    <p>Hi, {{ current_user.name }} [<strong>{{ current_user.email }}</strong>]. You have logged in using a Google Account.</p>
-  {% if google_data is not none %}
-    <div class="info">
-      <p>User info fetched from <strong>{{ fetch_url }}</strong></p>
-      {% for key, value in google_data.items() %}
-        <p><strong>{{ key }}</strong>: {{ value }}</p>
-      {% endfor %}
-    </div>
-  {% endif %}
-  {% endif %}
+      <nav>
+        <a href="/home">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/spinder">spinder</a>
+        <a href="#">search</a>
+        <a href="/logout">logout</a>
+        <div class="animation start-home"></div>
+      </nav>
+      <h1>Home</h1>>
+{% if current_user.is_authenticated %}
+
+{% else %}
+<p>Click <a href="/google">here</a> to login with a Google Account.</p>
+{% endif %}
     </body>
 </html>
