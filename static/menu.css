@@ -106,7 +106,7 @@ nav {
   
   p { /* page settings all can be deleted */
       position: absolute;
-      bottom: 420px;
+      bottom: 300px;
       width: 100%;
       text-align: center;
       color: #ecf0f1;
