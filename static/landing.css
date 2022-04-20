@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.banner {
+    background-color: darkgreen;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NHwxMTkzOTE0fHxlbnwwfHx8fA%3D%3D&w=1000&q=80');
+    background-position: center top;
+    background-size: cover;
+}
