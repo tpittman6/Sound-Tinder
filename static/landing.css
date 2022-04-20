@@ -7,6 +7,40 @@
     background-color: darkgreen;
     height: 100vh;
     background-image: url('https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NHwxMTkzOTE0fHxlbnwwfHx8fA%3D%3D&w=1000&q=80');
-    background-position: center top;
+    background-position: center bottom;
     background-size: cover;
+}
+
+.header {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+.menu {
+    display: flex;
+    font-size: 20px;
+    color: black;
+    align-items: center;
+}
+
+.menu span {
+    margin-right: 30px;
+}
+
+.contact {
+    background-color: white;
+    color: black;
+    padding: 4px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.25s all ease-in
+}
+
+.contact:hover {
+    background-color: blue;
+
 }
