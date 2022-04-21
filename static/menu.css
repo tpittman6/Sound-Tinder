@@ -7,7 +7,7 @@ nav {
   border-radius: 18px;
   font-size: 0;
 }
-nav a { /*change menu fonts and positions*/
+nav li { /*change menu fonts and positions*/
   line-height: 50px;
   height: 100%;
   font-size: 15px;
@@ -19,6 +19,7 @@ nav a { /*change menu fonts and positions*/
   text-align: center;
   color: white;
   cursor: pointer;
+  
 }
 nav .animation {
   position: absolute;
@@ -29,43 +30,43 @@ nav .animation {
   border-radius: 18px; /*change  buttoms shape */
 }
 /* size of buttoms and range  of effect */
-a:nth-child(1) {
+li:nth-child(1) {
   width: 100px;
 }
-a:nth-child(2) {
+li:nth-child(2) {
   width: 110px;
 }
-a:nth-child(3) {
+li:nth-child(3) {
   width: 100px;
 }
-a:nth-child(4) {
+li:nth-child(4) {
   width: 160px;
 }
-a:nth-child(5) {
+li:nth-child(5) {
   width: 120px;
 }
 /*buttoms width and position */
-nav .start-home, a:nth-child(1):hover~.animation {
+nav .start-home, li:nth-child(1):hover~.animation {
   width: 100px;
   left: 0;
   background-color: #1abc9c;
 }
-nav .start-profile, a:nth-child(2):hover~.animation {
+nav .start-profile, li:nth-child(2):hover~.animation {
   width: 110px;
   left: 100px;
   background-color: #e74c3c;
 }
-nav .start-spinder, a:nth-child(3):hover~.animation {
+nav .start-spinder, li:nth-child(3):hover~.animation {
   width: 100px;
   left: 210px;
   background-color: #3498db;
 }
-nav .start-search, a:nth-child(4):hover~.animation {
+nav .start-search, li:nth-child(4):hover~.animation {
   width: 160px;
   left: 310px;
   background-color: #9b59b6;
 }
-nav .start-logout, a:nth-child(5):hover~.animation {
+nav .start-logout, li:nth-child(5):hover~.animation {
   width: 120px;
   left: 470px;
   background-color: #e67e22;
@@ -85,7 +86,7 @@ h1 {
   text-shadow: 2px 2px 4px #000000;
   font-family: 'Cherry Swash', cursive;
 }
-/* page settings all can be deleted */
+/* page settings all can be deleted 
 p { 
     position: absolute;
     bottom: 590px;
@@ -94,8 +95,15 @@ p {
     color: #ecf0f1;
     font-family: 'Cherry Swash',cursive;
     font-size: 16px;
-}
+}*/
 
 span {
     color: #2BD6B4;
 }
+a:link { text-decoration: none;}
+a:visited { text-decoration: none;
+  color: #f3f3f3; }
+a:hover { text-decoration: none;
+  color: #d7d7d7;}
+a:active { text-decoration: none; 
+  }
