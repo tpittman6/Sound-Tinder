@@ -96,6 +96,22 @@ def profile():
         "index.html",
     )
 
+
+# search page
+@app.route("/search")
+def search():
+    google_data = None
+    user_info_endpoint = '/oauth2/v2/userinfo'
+    if current_user.is_authenticated and google.authorized:
+        google_data = google.get(user_info_endpoint).json()
+    return render_template('search.html',
+            google_data=google_data,
+            fetch_url=google.base_url + user_info_endpoint)
+
+    return render_template(
+        "index.html",
+    )
+
 @app.route("/home")
 def home():
     google_data = None

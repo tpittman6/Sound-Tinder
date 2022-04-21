@@ -49,10 +49,13 @@ body, html {
   padding: 100px 20px;
   height: 100%;
 }
-
-#Home {background-color: red;}
-#Profile {background-color: green;}
-#Contact {background-color: blue;}
-#Spinder {background-color: #ffa500;}
-#About {background-color: orange;}
-#Account {background-color: orange;}
+.gb, .gb:visited {
+  border: 2px solid powderblue;
+  font: size 21px;
+  padding: 3px;
+  text-decoration: none;
+  background-color: #14796e;
+}
+.gb:hover, .gb:active {
+  background-color: rgb(13, 130, 97);
+}
