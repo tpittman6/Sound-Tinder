@@ -12,6 +12,7 @@ api_token_url = "https://accounts.spotify.com/api/token"
 
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+
 DATA = {
     "Content-Type": "application/x-www-form-urlencoded",
     "grant_type": "client_credentials",
