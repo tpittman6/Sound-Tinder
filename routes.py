@@ -42,7 +42,7 @@ def index():
     user_info_endpoint = '/oauth2/v2/userinfo'
     if current_user.is_authenticated and google.authorized:
         google_data = google.get(user_info_endpoint).json()
-    return render_template('home.html',
+    return render_template('index.html',
                            google_data=google_data,
                            fetch_url=google.base_url + user_info_endpoint)
 
@@ -50,7 +50,7 @@ def index():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
 
 
 @oauth_authorized.connect_via(google_blueprint)
@@ -217,7 +217,5 @@ def artist_registration():
 
 if __name__ == "__main__":
     app.run(
-        debug=True,
-        host=os.getenv("IP", "0.0.0.0"),
-        port=int(os.getenv("PORT", 5000)),
+        debug=True
     )

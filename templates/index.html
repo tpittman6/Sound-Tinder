@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spinder</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='landing.css' ) }} />
     <link rel="stylesheet" href="../static/landing.css">
 </head>
 
@@ -16,7 +17,14 @@
                 <img class="logo" src="../images/Spinder.png" width="100" height="100">
                 <div class="menu">
                     <div class="Login">
-                        Login
+                            {% if current_user.is_authenticated %}       
+                            <h2>
+                               <a href="/home">here</a>
+                            </h2>                    
+                            {% else %}
+                            <p><a href="/google">Login</a></p>
+                            {% endif %}
+                        </a>
                     </div>
                     <div class="About">
                         About
