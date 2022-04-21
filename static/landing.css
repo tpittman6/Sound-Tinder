@@ -27,11 +27,11 @@
     display: flex;
     font-size: 20px;
     color: black;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .menu span {
-    margin-right: 30px;
+    margin-right: 50px;
 }
 
 .contact {
@@ -45,7 +45,33 @@
 
 .contact:hover {
     background-color: blue;
+}
 
+.Login {
+    background-color: white;
+    color: black;
+    padding: 4px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.25s all ease-in
+}
+
+.Login:hover {
+    background-color: blue;
+
+}
+
+.About {
+    background-color: white;
+    color: black;
+    padding: 4px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.25s all ease-in
+}
+
+.About:hover {
+    background-color: blue;
 }
 
 .landingmain {
