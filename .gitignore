@@ -3,4 +3,4 @@ venv/*
 .env
 virtenv/*
 .DS_Store
-env
+env/*

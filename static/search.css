@@ -1,0 +1,71 @@
+html, body {
+    height:100%;
+	font-family: "Lato", sans-serif;
+	color: #fff;
+	background-color: #2c3e50;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1 0 auto;
+  margin: 5em auto;
+}
+
+h1 {
+	text-align: center;
+	font-family: Lato;
+
+}
+.albumart {
+	max-width: 100%;
+}
+.form {
+	margin: 3em auto;
+}
+.text_box_input {
+	width: 100%;
+}
+.song_info {
+	margin: 1em 2em;
+}
+.song_name {
+	font-size: 2em;
+
+}
+.tile {
+	background-color: transparent;
+	margin:2em auto;
+	box-shadow: 0px 5px 10px #333;
+
+}
+
+.second_half {
+	margin-left: 2em;
+}
+p.artist_name {
+	color: #fff;
+}
+.audio_link {
+	font-size: 2em;
+	margin-top: 1em;
+}
+.audio_link.a {
+	color: #1ed760;
+}
+.whitebtn, .whitebtn:hover {
+	color: #fff !important;
+}
+figure.popularity {
+	display: inline-flex;
+	margin-top: 35px;
+    margin-bottom: 25px;
+}
+figure.popularity > img.flame {
+	width: 2em;
+}
+.audio_link > a > img {
+	height: 2em;
+}
+

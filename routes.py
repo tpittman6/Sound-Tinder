@@ -11,9 +11,16 @@ from flask_dance.contrib.google import make_google_blueprint, google
 from dotenv import find_dotenv, load_dotenv
 from flask_dance.consumer.storage.sqla import (OAuthConsumerMixin,
                                                SQLAlchemyStorage)
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
 load_dotenv(find_dotenv())
 
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
+	client_id=os.getenv('CLIENT_ID'),
+	client_secret=os.getenv('CLIENT_SECRET')
+	)
+)
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 login_manager = LoginManager()
@@ -42,7 +49,7 @@ def index():
     user_info_endpoint = '/oauth2/v2/userinfo'
     if current_user.is_authenticated and google.authorized:
         google_data = google.get(user_info_endpoint).json()
-    return render_template('home.html',
+    return render_template('index.html',
                            google_data=google_data,
                            fetch_url=google.base_url + user_info_endpoint)
 
@@ -50,8 +57,23 @@ def index():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
+#spotify search call/artist or songs
+@app.route('/',methods = ['POST', 'GET'])
+def login():
+	if request.method == 'POST':
+		search_text = request.form['nm']
 
+		results = sp.search(q=search_text, limit=10)
+		# for idx, track in enumerate(results['tracks']['items']):
+		# 	print(idx, track['name'])
+		songlist = results['tracks']['items']
+
+		return render_template('search.html', tracks=songlist)
+		# return jsonify(results)
+	else:
+		user = request.args.get('nm')
+		return render_template('search.html')
 
 @oauth_authorized.connect_via(google_blueprint)
 def google_logged_in(blueprint, token):
@@ -73,6 +95,11 @@ def google_logged_in(blueprint, token):
         user = User(email=user_info["email"],
                     name=user_info["name"])
         oauth.user = user
+        registered_user = User.query.filter_by(email=user_info["email"])
+    if registered_user:
+        user = registered_user.first()
+        login_user(user)
+    else:   
         db.session.add_all([user, oauth])
         db.session.commit()
         login_user(user)
@@ -107,6 +134,21 @@ def home():
 
     return render_template(
         "home.html",
+    )
+    
+# search page
+@app.route("/search")
+def search():
+    google_data = None
+    user_info_endpoint = '/oauth2/v2/userinfo'
+    if current_user.is_authenticated and google.authorized:
+        google_data = google.get(user_info_endpoint).json()
+    return render_template('search.html',
+            google_data=google_data,
+            fetch_url=google.base_url + user_info_endpoint)
+
+    return render_template(
+        "index.html",
     )
 
 
@@ -202,7 +244,5 @@ def artist_registration():
 
 if __name__ == "__main__":
     app.run(
-        debug=True,
-        host=os.getenv("IP", "0.0.0.0"),
-        port=int(os.getenv("PORT", 5000)),
+        debug=True
     )

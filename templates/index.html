@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spinder</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='landing.css' ) }} />
+    <link rel="stylesheet" href={{ url_for('static', filename='menu.css' ) }} />
     <link rel="stylesheet" href="../static/landing.css">
 </head>
 
@@ -13,10 +15,17 @@
     <div class="wrapper">
         <div class="banner">
             <div class="header">
-                <img class="logo" src="../images/Spinder.png" width="100" height="100">
+                <img class="logo" src="{{url_for('static',filename='images/spinder.png')}}" width="200" height="200">
                 <div class="menu">
                     <div class="Login">
-                        Login
+                            {% if current_user.is_authenticated %}       
+                            <h2>
+                               <a href="/home">here</a>
+                            </h2>                    
+                            {% else %}
+                            <p><a href="/google">Login</a></p>
+                            {% endif %}
+                        </a>
                     </div>
                     <div class="About">
                         About
@@ -45,12 +54,12 @@
                 </div>
             </div>
             <div class="rightuser">
-                <img src="../images/Silent_party.jpg">
+                <img src="{{url_for('static',filename='images/Silent_party.jpg')}}">
             </div>
         </div>
         <div class="Sect2">
             <div class="leftartist">
-                <img src="../images/mixer_party2.jpg">
+                <img src="{{url_for('static',filename='images/mixer_party2.jpg')}}">
             </div>
             <div class="rightartist">
                 <div class="text_holder">
