@@ -9,6 +9,8 @@
     background-image: url('https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NHwxMTkzOTE0fHxlbnwwfHx8fA%3D%3D&w=1000&q=80');
     background-position: center bottom;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
 }
 
 .header {
@@ -43,4 +45,20 @@
 .contact:hover {
     background-color: blue;
 
+}
+
+.landingmain {
+    color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    flex-grow: 1;
+    font-weight: bold;
+}
+
+.arrow {
+    margin-top: 20px;
+    cursor: pointer;
 }
