@@ -27,7 +27,7 @@
     display: flex;
     font-size: 20px;
     color: black;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .menu span {
@@ -44,7 +44,7 @@
 }
 
 .contact:hover {
-    background-color: blue;
+    background-color: red;
 }
 
 .Login {
@@ -57,7 +57,7 @@
 }
 
 .Login:hover {
-    background-color: blue;
+    background-color: red;
 
 }
 
@@ -71,7 +71,7 @@
 }
 
 .About:hover {
-    background-color: blue;
+    background-color: red;
 }
 
 .landingmain {
