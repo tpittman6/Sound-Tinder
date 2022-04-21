@@ -11,9 +11,16 @@ from flask_dance.contrib.google import make_google_blueprint, google
 from dotenv import find_dotenv, load_dotenv
 from flask_dance.consumer.storage.sqla import (OAuthConsumerMixin,
                                                SQLAlchemyStorage)
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
 load_dotenv(find_dotenv())
 
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
+	client_id=os.getenv('CLIENT_ID'),
+	client_secret=os.getenv('CLIENT_SECRET')
+	)
+)
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 login_manager = LoginManager()
@@ -52,6 +59,21 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/',methods = ['POST', 'GET'])
+def login():
+	if request.method == 'POST':
+		search_text = request.form['nm']
+
+		results = sp.search(q=search_text, limit=10)
+		# for idx, track in enumerate(results['tracks']['items']):
+		# 	print(idx, track['name'])
+		songlist = results['tracks']['items']
+
+		return render_template('search.html', tracks=songlist)
+		# return jsonify(results)
+	else:
+		user = request.args.get('nm')
+		return render_template('search.html')
 
 @oauth_authorized.connect_via(google_blueprint)
 def google_logged_in(blueprint, token):

@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
         <link rel="stylesheet" href={{ url_for('static', filename='menu.css' ) }} />
+        <link rel="stylesheet" href={{ url_for('static', filename='search.css' ) }} />
     </head>
     <body>
       <nav>
@@ -12,6 +13,57 @@
         <li> <a href="/logout">logout</a></li>
         <div class="animation start-home"></div>
       </nav>
-<p>search</p>
+<div class="container content">
+  <div class="row">
+    <div class="twelve columns">
+      <h1>Search for Artist or Songs</h1>
+    </div>
+  </div>
+  <form class="form" action = "/" method = "post">
+    <div class="row">
+      <div class="ten columns">	
+        <p class="text_box">
+          <input class="text_box_input" type="text" placeholder="Surf for an artist or song" name = "nm" />
+        </p>
+      </div>
+      <div class="two columns">
+        <input class="submit_button whitebtn" type = "submit" value = "submit" />
+      </div>
+    </div>
+  </form>
+
+  {% if tracks %} 
+  <p>Here are the top 10 tracks</p>
+  {% for track in tracks %}
+  <div class="tile row">
+    <div class="four columns">
+      <img class="albumart" src={{track['album']['images'][1]['url']}}>
+    </div>	
+
+    <div class="eight columns songinfo">
+      <p class="song_name">{{track['name']}}</p>
+      <p class="artist_name">{{track['artists'][0]['name']}}</p>
+
+      <audio controls>
+        <source src="{{track['preview_url']}}" type="">
+      </audio>
+      <div class="row">
+        <p class="audio_link four columns">
+          <a href="{{track['external_urls']['spotify']}}">
+            <img src="https://logodownload.org/wp-content/uploads/2020/03/listen-on-spotify.png">
+          </a>
+        </p>
+        <figure class="two columns popularity">
+          <img class="flame" title="popularity" src="{{url_for('static',filename='icons/flame.png')}}">
+          <figcaption>
+            {{track['popularity']}}
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
     </body>
 </html>
