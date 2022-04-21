@@ -58,7 +58,7 @@ def index():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
+#spotify search call/artist or songs
 @app.route('/',methods = ['POST', 'GET'])
 def login():
 	if request.method == 'POST':
@@ -95,6 +95,11 @@ def google_logged_in(blueprint, token):
         user = User(email=user_info["email"],
                     name=user_info["name"])
         oauth.user = user
+        registered_user = User.query.filter_by(email=user_info["email"])
+    if registered_user:
+        user = registered_user.first()
+        login_user(user)
+    else:   
         db.session.add_all([user, oauth])
         db.session.commit()
         login_user(user)
