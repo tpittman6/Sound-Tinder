@@ -44,7 +44,7 @@
 }
 
 .contact:hover {
-    background-color: red;
+    background-color: orange;
 }
 
 .Login {
@@ -57,7 +57,7 @@
 }
 
 .Login:hover {
-    background-color: red;
+    background-color: orange;
 
 }
 
@@ -71,11 +71,11 @@
 }
 
 .About:hover {
-    background-color: red;
+    background-color: orange;
 }
-
+/* take a spin on your music life tittle */
 .landingmain {
-    color: red;
+    color: rgb(249, 247, 247);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -164,3 +164,10 @@
     align-items: center;
     justify-content: center;
 }
+a:link { text-decoration: none;}
+a:visited { text-decoration: none;
+  color: #040202; }
+a:hover { text-decoration: none;
+  color: #d7d7d7;}
+a:active { text-decoration: none; 
+  }
