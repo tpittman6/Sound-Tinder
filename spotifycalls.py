@@ -7,6 +7,7 @@ import base64
 import json
 
 load_dotenv(find_dotenv())
+# all # are just taking out the tests I did earlier to see if API would work and if Access token was saved correctly
 
 api_url_artist = "https://api.spotify.com/v1/artists/"
 api_token_url = "https://accounts.spotify.com/api/token"
@@ -26,22 +27,22 @@ def authorize():
     )
     reqkey = authkeydata.json()
     token = reqkey.get("access_token")
-    print(token)
+    # print(token)
     return f"{token}"
 
 
 def artist_basic_info(artistID):
     ART_URL = api_url_artist + artistID
-    print("1")
+    # print("1")
     headers = {
         "Authorization": f"Bearer {authorize()}",
         "Accept": "application/json",
         "Content-Type": "application/json",
     }
-    print("2")
+    # print("2")
     res = requests.get(ART_URL, headers=headers)
     art_data = res.json()
-    print(art_data)
+    # print(art_data)
 
 
-artist_basic_info("5f7VJjfbwm532GiveGC0ZK")
+# artist_basic_info("5f7VJjfbwm532GiveGC0ZK") (test)
