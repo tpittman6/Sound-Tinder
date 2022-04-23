@@ -1,38 +1,40 @@
 <html>
-    <head>
-        <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
-        <link rel="stylesheet" href={{ url_for('static', filename='menu.css' ) }} />
-    </head>
 
-    <body>
-	<nav>
+<head>
+    <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
+    <link rel="stylesheet" href={{ url_for('static', filename='menu.css' ) }} />
+</head>
+
+<body>
+    <nav>
         <li><a href="/home">Home</a> </li>
         <li> <a href="/profile">Profile</a></li>
         <li><a href="/spinder">spinder</a> </li>
         <li><a href="/search">search</a> </li>
         <li> <a href="/logout">logout</a></li>
-		<div class="animation start-home"></div>
-	</nav>
-        {% if current_user.is_authenticated %}
-        <div>
-            {% block content %}
-                <h1>Artist Registration</h1>
-                <form action="/artist_registration" method="post">
-                    <label for="name">Artist Name</label>
-                    <input type="text" name="name" value="{{ request.form['name'] }}"></input>
-                    <br>
-                    <br>
-                    <label for="spotify_player">embed your spotify player here</label>
-                    <input type="text" name="spotify_player" value="{{ request.form['spotify_player'] }}"></input>
-                    <br>
-                    <br>
-                    <button type="submit">Submit</button>
-                </form>
-            {% endblock %}
-        </div>
-        
-        {% else %}
-            <p>Click <a href="/google">here</a> to login with a Google Account.</p>
-        {% endif %}
-    </body>
+        <div class="animation start-home"></div>
+    </nav>
+    {% if current_user.is_authenticated %}
+    <div>
+        {% block content %}
+        <h1>Artist Registration</h1>
+        <form action="/artist_registration" method="post">
+            <label for="name">Artist ID</label>
+            <input type="text" name="name" value="{{ request.form['artist_id'] }}"></input>
+            <br>
+            <br>
+            <label for="spotify_player">embed your spotify player here</label>
+            <input type="text" name="spotify_player" value="{{ request.form['spotify_player'] }}"></input>
+            <br>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+        {% endblock %}
+    </div>
+
+    {% else %}
+    <p>Click <a href="/google">here</a> to login with a Google Account.</p>
+    {% endif %}
+</body>
+
 </html>
