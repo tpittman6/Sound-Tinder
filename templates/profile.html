@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
         <link rel="stylesheet" href={{ url_for('static', filename='menu.css' ) }} />
+        <link rel="stylesheet" href={{ url_for('static', filename='card.css' ) }} />
     </head>
     <body>
         <nav>
@@ -12,19 +13,22 @@
             <li> <a href="/logout">logout</a></li>
             <div class="animation start-home"></div>
         </nav>
-        <h1>
-            Profile Page
-        </h1>
         {% if current_user.is_authenticated %}
         
         <h2>
-            <h1>Register as an artist <a href="/artist_registration">here</a></h1>
+            <h1>Register as an artist -> <a href="/artist_registration">here</a></h1>
         </h2>
 
         {% else %}
         <p>Click <a href="/google">here</a> to login with a Google Account.</p>
         {% endif %}
         
-    
+        <div class="cardp">
+            <img src="static/images/Spinder.png" alt="Avatar" style="width:100%">
+            <div class="container">
+              <h4><b>{{ current_user.name }}</b></h4> 
+              <p>Hi, {{ current_user.name }} [<strong>{{ current_user.email }}</strong>]. You have logged in using a Google Account.</p>
+            </div>
+          </div>
     </body>
 </html>

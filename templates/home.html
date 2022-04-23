@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} />
         <link rel="stylesheet" href={{ url_for('static', filename='menu.css' ) }} />
+        <link rel="stylesheet" href={{ url_for('static', filename='card.css' ) }} />
     </head>
     <body>
       <nav>
@@ -15,12 +16,24 @@
       <h3>Spinder!!</h3>
 
 {% if current_user.is_authenticated %}
-<p> Our generation is in love with music. Atlanta, Georgia is home to a plethora of artists, all ranging from RnB to Soul to Rap.<br>
-    We are living in a musical mecca, and artists need a platform that is friendly enough to allow them to be discovered in an effective and friendly way.</br>
-    <br>Meet Spinder! We strive to make a platform for Users to enjoy more of what they already do on a daily basis: listen to music!</br>
-    We also strive for the artist to gain more recognition through a fun, interactive system similar to the Tinder layout. Get out there and Spinder!</p>
+
 {% else %}
 <p>Click <a href="/google">here</a> to login with a Google Account.</p>
 {% endif %}
+
+<div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <img src="static/images/spinderflip.png" alt="Avatar" style="width:300px;height:300px;">
+      </div>
+      <div class="flip-card-back">
+        <p> Our generation is in love with music. Atlanta, Georgia is home to a plethora of artists, all ranging from RnB to Soul to Rap.<br>
+            We are living in a musical mecca, and artists need a platform that is friendly enough to allow them to be discovered in an effective and friendly way.</br>
+            <br>Meet Spinder! We strive to make a platform for Users to enjoy more of what they already do on a daily basis: listen to music!</br>
+            We also strive for the artist to gain more recognition through a fun, interactive system similar to the Tinder layout. Get out there and Spinder!</p></p> 
+      </div>
+    </div>
+  </div>
+
     </body>
 </html>
