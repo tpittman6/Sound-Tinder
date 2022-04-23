@@ -13,4 +13,4 @@ export CLIENT_SECRET="FROM YOUR SPOTIFY DEVELOPERS APP "
 ```
 3. comment out lines that contain 'IP' and 'PORT' in routes.py so google oauth will work
 4. Run `python3 routes.py`
-
+5. https://spinderr.herokuapp.com/ 
