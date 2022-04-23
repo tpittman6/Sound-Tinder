@@ -9,7 +9,6 @@ from flask_dance.consumer import oauth_authorized
 from flask_dance.contrib.google import make_google_blueprint, google
 from dotenv import find_dotenv, load_dotenv
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin, SQLAlchemyStorage
-from spotifycalls import artist_basic_info
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
@@ -174,7 +173,6 @@ def spinder():
     # When an onClick event happens, the query will iterate to the next artist
     counter = 1
     if request.method == "POST":
-        # an attempt to update counter to let user know there aren't any more artists in database to view
         counter = counter + 1
         if counter > Artist.query.count():
             curr_artist_name = "Sorry,"
@@ -233,19 +231,19 @@ def artist_registration():
 
     # Creating a new artist model in database
     if request.method == "POST":
-        artist_id = request.form["artist_id"]
+        name = request.form["name"]
         spotify_player = request.form["spotify_player"]
 
         # Couldn't get the messages to flash,
         # but they do stop you from posting the form if you miss a field
-        if not artist_id:
-            flash("Artist ID is required")
+        if not name:
+            flash("Artist name is required")
         elif not spotify_player:
             flash("Valid Spotify ID is required")
 
         else:
             new_artist = Artist(
-                artist_id=artist_id,
+                artist_name=name,
                 spotify_player=spotify_player,
                 user_email=current_user.email,
             )

@@ -22,7 +22,6 @@ class OAuth(OAuthConsumerMixin, db.Model):
 class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     artist_name = db.Column(db.String(256))
-    artist_id = db.Column(db.String(256))
     spotify_player = db.Column(db.String(256))
     user_email = db.Column(db.String(256))  # this is to match artist with its user
 

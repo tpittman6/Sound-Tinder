@@ -19,8 +19,8 @@
         {% block content %}
         <h1>Artist Registration</h1>
         <form action="/artist_registration" method="post">
-            <label for="name">Artist ID</label>
-            <input type="text" name="name" value="{{ request.form['artist_id'] }}"></input>
+            <label for="name">Artist Name</label>
+            <input type="text" name="name" value="{{ request.form['name'] }}"></input>
             <br>
             <br>
             <label for="spotify_player">embed your spotify player here</label>
