@@ -42,7 +42,9 @@ def artist_basic_info(artistID):
     # print("2")
     res = requests.get(ART_URL, headers=headers)
     art_data = res.json()
-    # print(art_data)
+    artist_name = art_data["name"]
+    # artist_name= art_data["name"]
+    print(artist_name)
 
 
-# artist_basic_info("5f7VJjfbwm532GiveGC0ZK") (test)
+artist_basic_info("5f7VJjfbwm532GiveGC0ZK")
